@@ -46,8 +46,8 @@ namespace AutoReservation.Dal
 
             modelBuilder.Entity<Auto>()
                 .Map<StandardAuto>(a => a.Requires("AutoKlasse").HasValue(2))
-                .Map<MittelKlasseAuto>(a => a.Requires("AutoKlasse").HasValue(1))
-                .Map<LuxusKlasseAuto>(a => a.Requires("AutoKlasse").HasValue(0))
+                .Map<MittelklasseAuto>(a => a.Requires("AutoKlasse").HasValue(1))
+                .Map<LuxusklasseAuto>(a => a.Requires("AutoKlasse").HasValue(0))
                 .ToTable("Auto");
         }
     }

@@ -18,13 +18,13 @@ namespace AutoReservation.Dal.Entities
         public virtual ICollection<Reservation> Reservationen { get; set; }
     }
 
-    public class LuxusKlasseAuto : Auto
+    public class LuxusklasseAuto : Auto
     {
         [Required]
         public int Basistarif { get; set; }
     }
 
-    public class MittelKlasseAuto : Auto
+    public class MittelklasseAuto : Auto
     {
         [Required]
         public override int Tagestarif { get; set; }

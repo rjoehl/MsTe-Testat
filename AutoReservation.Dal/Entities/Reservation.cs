@@ -26,5 +26,4 @@ namespace AutoReservation.Dal.Entities
         [ForeignKey(nameof(KundeId))]
         public virtual Kunde Kunde { get; set; }
     }
-
 }

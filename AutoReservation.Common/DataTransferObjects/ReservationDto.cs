@@ -2,29 +2,30 @@
 using System;
 using System.Runtime.Serialization;
 using System.Text;
+
 namespace AutoReservation.Common.DataTransferObjects
 {
-        [DataContract]
-        public class ReservationDto: DtoBase<ReservationDto>
+    [DataContract]
+    public class ReservationDto: DtoBase<ReservationDto>
+    {
+        private int reservationsNr;
+        [DataMember]
+        public int ReservationsNr
         {
-            private int reservationsNr;
-            [DataMember]
-            public int ReservationsNr
-            {
-                get { return reservationsNr; }
-                set
+            get { return reservationsNr; }
+            set
+            { 
+                if (reservationsNr != value)
                 {
-                    if (reservationsNr != value)
-                    {
-                        reservationsNr = value;
-                        OnPropertyChanged(nameof(ReservationsNr));
-                    }
+                    reservationsNr = value;
+                    OnPropertyChanged(nameof(ReservationsNr));
                 }
             }
+        }
 
-            private DateTime von;
-            [DataMember]
-            public DateTime Von
+        private DateTime von;
+        [DataMember]
+        public DateTime Von
             {
                 get { return von; }
                 set
@@ -37,9 +38,9 @@ namespace AutoReservation.Common.DataTransferObjects
                 }
             }
 
-            private DateTime bis;
-            [DataMember]
-            public DateTime Bis
+        private DateTime bis;
+        [DataMember]
+        public DateTime Bis
             {
                 get { return bis; }
                 set
@@ -52,9 +53,9 @@ namespace AutoReservation.Common.DataTransferObjects
                 }
             }
 
-            private AutoDto auto;
-            [DataMember]
-            public AutoDto Auto
+        private AutoDto auto;
+        [DataMember]
+        public AutoDto Auto
             {
                 get { return auto; }
                 set
@@ -67,9 +68,9 @@ namespace AutoReservation.Common.DataTransferObjects
                 }
             }
 
-            private KundeDto kunde;
-            [DataMember]
-            public KundeDto Kunde
+        private KundeDto kunde;
+        [DataMember]
+        public KundeDto Kunde
             {
                 get { return kunde; }
                 set
@@ -82,7 +83,7 @@ namespace AutoReservation.Common.DataTransferObjects
                 }
             }
 
-            public override string Validate()
+        public override string Validate()
             {
                 StringBuilder error = new StringBuilder();
                 if (Von == DateTime.MinValue)
@@ -130,5 +131,4 @@ namespace AutoReservation.Common.DataTransferObjects
             public override string ToString()
                 => $"{ReservationsNr}; {Von}; {Bis}; {Auto}; {Kunde}";
     }
-
 }

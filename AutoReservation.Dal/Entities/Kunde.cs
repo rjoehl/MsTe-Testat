@@ -21,5 +21,4 @@ namespace AutoReservation.Dal.Entities
 
         public virtual ICollection<Reservation> Reservationen { get; set; }
     }
-
 }

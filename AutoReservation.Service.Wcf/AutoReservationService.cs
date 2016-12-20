@@ -79,7 +79,7 @@ namespace AutoReservation.Service.Wcf
         public ReservationDto GetReservationByNr(int reservationsNr)
         {
             WriteActualMethod();
-            return component.GetReservationByNr(reservationsNr).ConvertToDto();
+            return component.LoadReservation(reservationsNr).ConvertToDto();
         }
 
         public AutoDto InsertAuto(AutoDto autoDto)
@@ -97,25 +97,32 @@ namespace AutoReservation.Service.Wcf
         public ReservationDto InsertReservation(ReservationDto reservationDto)
         {
             WriteActualMethod();
-            return component.InsertReservation(reservationDto.ConvertToEntity()).ConvertToDto();
+            Reservation reservation = reservationDto.ConvertToEntity();
+            component.InsertReservation(reservation);
+            return reservation.ConvertToDto();
         }
 
         public AutoDto UpdateAuto(AutoDto autoDto)
         {
             WriteActualMethod();
-            return component.UpdateAuto(autoDto.ConvertToEntity()).ConvertToDto();
+            Auto auto = autoDto.ConvertToEntity();
+            component.UpdateAuto(auto);
+            return auto.ConvertToDto();
         }
 
         public KundeDto UpdateKunde(KundeDto kundeDto)
         {
             WriteActualMethod();
-            return component.UpdateKunde(kundeDto.ConvertToEntity()).ConvertToDto();
+            Kunde kunde = kundeDto.ConvertToEntity();
+            component.UpdateKunde(kunde);
+            return kunde.ConvertToDto();
         }
 
         public ReservationDto UpdateReservation(ReservationDto reservationDto)
         {
             WriteActualMethod();
-            return component.UpdateReservation(reservationDto.ConvertToEntity()).ConvertToDto();
+            Reservation reservation = reservationDto.ConvertToEntity();
+            return component.UpdateReservation(reservation).ConvertToDto();
         }
     }
 }

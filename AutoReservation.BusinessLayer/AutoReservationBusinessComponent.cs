@@ -107,6 +107,17 @@ namespace AutoReservation.BusinessLayer
                 return query.First();
             }
         }
+        //test function
+        public Reservation LoadReservation(int reservationsNr)
+        {
+            using (var context = new AutoReservationContext())
+            {
+                return context.Reservationen
+                    .Include(reservation => reservation.Kunde)
+                    .Include(reservation => reservation.Auto)
+                    .SingleOrDefault(reservation => reservation.ReservationsNr == reservationsNr);
+            }
+        }
 
         public Auto InsertAuto(Auto auto)
         {
@@ -135,7 +146,8 @@ namespace AutoReservation.BusinessLayer
 
         public Reservation UpdateReservation(Reservation reservation)
         {
-            return updateEntityAndState(reservation, EntityState.Modified);
+            updateEntityAndState(reservation, EntityState.Modified);
+            return GetReservationByNr(reservation.ReservationsNr);
         }
 
         public void DeleteAuto(Auto auto)

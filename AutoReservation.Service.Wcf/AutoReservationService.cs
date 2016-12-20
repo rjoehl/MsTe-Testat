@@ -2,8 +2,11 @@
 using System;
 using System.Diagnostics;
 using AutoReservation.Common.DataTransferObjects;
+using AutoReservation.Common.FaultExceptions;
 using System.Collections.Generic;
 using AutoReservation.BusinessLayer;
+using AutoReservation.Dal.Entities;
+using System.ServiceModel;
 
 namespace AutoReservation.Service.Wcf
 {
@@ -16,7 +19,8 @@ namespace AutoReservation.Service.Wcf
             get
             {
                 WriteActualMethod();
-                return component.Autos.ConvertToDtos();
+                List<Auto> autoList = component.GetAllAutos();
+                return autoList.ConvertToDtos();
             }
         }
 
@@ -25,7 +29,8 @@ namespace AutoReservation.Service.Wcf
             get
             {
                 WriteActualMethod();
-                return component.Kunden.ConvertToDtos();
+                List<Kunde> kundeList = component.GetAllKunden();
+                return kundeList.ConvertToDtos();
             }
         }
 
@@ -34,7 +39,8 @@ namespace AutoReservation.Service.Wcf
             get
             {
                 WriteActualMethod();
-                return component.Reservationen.ConvertToDtos();
+                List<Reservation> reservationList = component.GetAllReservations();
+                return reservationList.ConvertToDtos();
             }
         }
 
@@ -44,7 +50,7 @@ namespace AutoReservation.Service.Wcf
         }
 
         public void DeleteAuto(AutoDto autoDto)
-        {
+         {
             component.DeleteAuto(autoDto.ConvertToEntity());
         }
 

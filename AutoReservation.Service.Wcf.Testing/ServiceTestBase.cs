@@ -101,18 +101,19 @@ namespace AutoReservation.Service.Wcf.Testing
         [TestMethod]
         public void GetAutoByIdWithIllegalIdTest()
         {
-            Assert.Inconclusive("Test not implemented.");
+            Assert.IsNull(Target.GetAutoById(3652));
         }
 
         [TestMethod]
         public void GetKundeByIdWithIllegalIdTest()
         {
-            Assert.Inconclusive("Test not implemented.");
+            Assert.IsNull(Target.GetKundeById(3652));
         }
 
         [TestMethod]
         public void GetReservationByNrWithIllegalIdTest()
         {
+            Assert.IsNull(Target.GetReservationByNr(3652));
         }
 
         #endregion

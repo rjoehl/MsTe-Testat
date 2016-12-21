@@ -76,10 +76,10 @@ namespace AutoReservation.Service.Wcf
             return component.GetKundeById(id).ConvertToDto();
         }
 
-        public ReservationDto GetReservationByNr(int reservationsNr)
+        public ReservationDto GetReservationByNr(int id)
         {
             WriteActualMethod();
-            return component.LoadReservation(reservationsNr).ConvertToDto();
+            return component.LoadReservation(id).ConvertToDto();
         }
 
         public AutoDto InsertAuto(AutoDto autoDto)

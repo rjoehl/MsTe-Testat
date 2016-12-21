@@ -107,7 +107,7 @@ namespace AutoReservation.BusinessLayer
                 return query.First();
             }
         }
-        //test function
+        
         public Reservation LoadReservation(int reservationsNr)
         {
             using (var context = new AutoReservationContext())

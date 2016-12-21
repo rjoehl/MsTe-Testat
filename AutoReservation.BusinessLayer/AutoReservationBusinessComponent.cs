@@ -57,10 +57,16 @@ namespace AutoReservation.BusinessLayer
         {
             using (var context = new AutoReservationContext())
             {
+
                 var query = from auto in context.Autos
                             where auto.Id == id
                             select auto;
+                if (query.Count() == 0)
+                {
+                    return null;
+                } else { 
                 return query.First();
+                }
             }
         }
 
@@ -79,9 +85,16 @@ namespace AutoReservation.BusinessLayer
             using (var context = new AutoReservationContext())
             {
                 var query = from kunde in context.Kunden
-                            where kunde.Id == id
-                            select kunde;
-                return query.First();
+                                where kunde.Id == id
+                                select kunde;
+                if (query.Count() == 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return query.First();
+                }
             }
         }
 

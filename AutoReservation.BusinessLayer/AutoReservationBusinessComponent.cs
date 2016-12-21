@@ -131,7 +131,7 @@ namespace AutoReservation.BusinessLayer
 
         public Reservation InsertReservation(Reservation reservation)
         {
-            return updateEntityAndState(reservation, EntityState.Added);
+            return updateReservationAndState(reservation, EntityState.Added);
         }
 
         public Auto UpdateAuto(Auto auto)
@@ -146,8 +146,7 @@ namespace AutoReservation.BusinessLayer
 
         public Reservation UpdateReservation(Reservation reservation)
         {
-            updateEntityAndState(reservation, EntityState.Modified);
-            return GetReservationByNr(reservation.ReservationsNr);
+            return updateReservationAndState(reservation, EntityState.Modified);
         }
 
         public void DeleteAuto(Auto auto)
@@ -172,6 +171,21 @@ namespace AutoReservation.BusinessLayer
             {
                 context.Entry(value).State = state;
                 context.SaveChanges();
+            }
+
+            return value;
+        }
+
+        private Reservation updateReservationAndState(Reservation value, EntityState state)
+        {
+            using (var context = new AutoReservationContext())
+            {
+                var entry = context.Entry(value);
+                entry.State = state;
+                context.SaveChanges();
+
+                entry.Reference(r => r.Auto).Load();
+                entry.Reference(r => r.Kunde).Load();
             }
 
             return value;

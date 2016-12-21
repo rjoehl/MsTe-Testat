@@ -98,7 +98,7 @@ namespace AutoReservation.Service.Wcf
         {
             WriteActualMethod();
             Reservation reservation = reservationDto.ConvertToEntity();
-            component.InsertReservation(reservation);
+            reservation = component.InsertReservation(reservation);
             return reservation.ConvertToDto();
         }
 

@@ -14,6 +14,11 @@ namespace AutoReservation.Service.Wcf
     {
         private readonly AutoReservationBusinessComponent component = new AutoReservationBusinessComponent();
 
+        private static void WriteActualMethod()
+        {
+            Console.WriteLine($"Calling: {new StackTrace().GetFrame(1).GetMethod().Name}");
+        }
+
         public List<AutoDto> Autos
         {
             get
@@ -42,11 +47,6 @@ namespace AutoReservation.Service.Wcf
                 List<Reservation> reservationList = component.GetAllReservations();
                 return reservationList.ConvertToDtos();
             }
-        }
-
-        private static void WriteActualMethod()
-        {
-            Console.WriteLine($"Calling: {new StackTrace().GetFrame(1).GetMethod().Name}");
         }
 
         public void DeleteAuto(AutoDto autoDto)

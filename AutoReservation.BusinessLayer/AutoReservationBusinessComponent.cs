@@ -20,7 +20,7 @@ namespace AutoReservation.BusinessLayer
             return new LocalOptimisticConcurrencyException<T>($"Update {typeof(Auto).Name}: Concurrency-Fehler", dbEntity);
         }
 
-        public IEnumerable<Auto> Autos
+        public List<Auto> Autos
         {
             get
             {
@@ -31,7 +31,7 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-        public IEnumerable<Kunde> Kunden
+        public List<Kunde> Kunden
         {
             get
             {
@@ -42,7 +42,7 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-        public IEnumerable<Reservation> Reservationen
+        public List<Reservation> Reservationen
         {
             get
             {

@@ -14,17 +14,7 @@ namespace AutoReservation.BusinessLayer
 
         public List<Kunde> Kunden { get { return usingContext(context => context.Kunden.ToList()); } }
 
-        public List<Reservation> Reservationen
-        {
-            get
-            {
-                return usingContext(context =>
-                    context.Reservationen
-                        .Include(reservation => reservation.Kunde)
-                        .Include(reservation => reservation.Auto)
-                        .ToList());
-            }
-        }
+        public List<Reservation> Reservationen { get { return usingContext(context => includeReservationReferences(context.Reservationen).ToList()); } }
 
         public Auto GetAutoById(int id)
         {
@@ -39,9 +29,7 @@ namespace AutoReservation.BusinessLayer
         public Reservation GetReservationByNr(int reservationsNr)
         {
             return usingContext(context =>
-                context.Reservationen
-                    .Include(reservation => reservation.Kunde)
-                    .Include(reservation => reservation.Auto)
+                includeReservationReferences(context.Reservationen)
                     .FirstOrDefault(reservation => reservation.ReservationsNr == reservationsNr));
         }
 
@@ -98,6 +86,13 @@ namespace AutoReservation.BusinessLayer
         private static Kunde updateKunde(Kunde value, EntityState state)
         {
             return updateEntityWithoutReferences(value, state);
+        }
+
+        private static IQueryable<Reservation> includeReservationReferences(IQueryable<Reservation> reservations)
+        {
+            return reservations
+                    .Include(reservation => reservation.Kunde)
+                    .Include(reservation => reservation.Auto);
         }
 
         private static Reservation updateReservation(Reservation value, EntityState state)

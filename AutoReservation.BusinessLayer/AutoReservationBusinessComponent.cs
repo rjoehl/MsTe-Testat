@@ -148,8 +148,11 @@ namespace AutoReservation.BusinessLayer
                 entry.State = state;
                 context.SaveChanges();
 
-                entry.Reference(r => r.Auto).Load();
-                entry.Reference(r => r.Kunde).Load();
+                if (entry.State != EntityState.Detached)
+                {
+                    entry.Reference(r => r.Auto).Load();
+                    entry.Reference(r => r.Kunde).Load();
+                }
             }
 
             return value;

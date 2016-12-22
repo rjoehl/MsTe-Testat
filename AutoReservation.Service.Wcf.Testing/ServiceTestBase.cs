@@ -51,11 +51,7 @@ namespace AutoReservation.Service.Wcf.Testing
             foreach (var expected in Target.Autos)
             {
                 var actual = Target.GetAutoById(expected.Id);
-                Assert.AreEqual(expected.AutoKlasse, actual.AutoKlasse);
-                Assert.AreEqual(expected.Basistarif, actual.Basistarif);
-                Assert.AreEqual(expected.Id, actual.Id);
-                Assert.AreEqual(expected.Marke, actual.Marke);
-                Assert.AreEqual(expected.Tagestarif, actual.Tagestarif);
+                assertAutoDtosAreEqual(expected, actual);
             }
         }
 
@@ -65,10 +61,7 @@ namespace AutoReservation.Service.Wcf.Testing
             foreach (var expected in Target.Kunden)
             {
                 var actual = Target.GetKundeById(expected.Id);
-                Assert.AreEqual(expected.Geburtsdatum, actual.Geburtsdatum);
-                Assert.AreEqual(expected.Id, actual.Id);
-                Assert.AreEqual(expected.Nachname, actual.Nachname);
-                Assert.AreEqual(expected.Vorname, actual.Vorname);
+                assertKundeDtosAreEqual(expected, actual);
             }
         }
 
@@ -78,19 +71,7 @@ namespace AutoReservation.Service.Wcf.Testing
             foreach (var expected in Target.Reservationen)
             {
                 var actual = Target.GetReservationByNr(expected.ReservationsNr);
-                Assert.AreEqual(expected.Bis, actual.Bis);
-                Assert.AreEqual(expected.Von, actual.Von);
-
-                Assert.AreEqual(expected.Auto.AutoKlasse, actual.Auto.AutoKlasse);
-                Assert.AreEqual(expected.Auto.Basistarif, actual.Auto.Basistarif);
-                Assert.AreEqual(expected.Auto.Id, actual.Auto.Id);
-                Assert.AreEqual(expected.Auto.Marke, actual.Auto.Marke);
-                Assert.AreEqual(expected.Auto.Tagestarif, actual.Auto.Tagestarif);
-
-                Assert.AreEqual(expected.Kunde.Geburtsdatum, actual.Kunde.Geburtsdatum);
-                Assert.AreEqual(expected.Kunde.Id, actual.Kunde.Id);
-                Assert.AreEqual(expected.Kunde.Nachname, actual.Kunde.Nachname);
-                Assert.AreEqual(expected.Kunde.Vorname, actual.Kunde.Vorname);
+                assertReservationDtosAreEqual(expected, actual);
             }
         }
 
@@ -132,11 +113,7 @@ namespace AutoReservation.Service.Wcf.Testing
             });
 
             var actual = Target.GetAutoById(expected.Id);
-            Assert.AreEqual(expected.AutoKlasse, actual.AutoKlasse);
-            Assert.AreEqual(expected.Basistarif, actual.Basistarif);
-            Assert.AreEqual(expected.Id, actual.Id);
-            Assert.AreEqual(expected.Marke, actual.Marke);
-            Assert.AreEqual(expected.Tagestarif, actual.Tagestarif);
+            assertAutoDtosAreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -150,10 +127,7 @@ namespace AutoReservation.Service.Wcf.Testing
             });
 
             var actual = Target.GetKundeById(expected.Id);
-            Assert.AreEqual(expected.Geburtsdatum, actual.Geburtsdatum);
-            Assert.AreEqual(expected.Id, actual.Id);
-            Assert.AreEqual(expected.Nachname, actual.Nachname);
-            Assert.AreEqual(expected.Vorname, actual.Vorname);
+            assertKundeDtosAreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -168,19 +142,7 @@ namespace AutoReservation.Service.Wcf.Testing
             });
 
             var actual = Target.GetReservationByNr(expected.ReservationsNr);
-            Assert.AreEqual(expected.Bis, actual.Bis);
-            Assert.AreEqual(expected.Von, actual.Von);
-
-            Assert.AreEqual(expected.Auto.AutoKlasse, actual.Auto.AutoKlasse);
-            Assert.AreEqual(expected.Auto.Basistarif, actual.Auto.Basistarif);
-            Assert.AreEqual(expected.Auto.Id, actual.Auto.Id);
-            Assert.AreEqual(expected.Auto.Marke, actual.Auto.Marke);
-            Assert.AreEqual(expected.Auto.Tagestarif, actual.Auto.Tagestarif);
-
-            Assert.AreEqual(expected.Kunde.Geburtsdatum, actual.Kunde.Geburtsdatum);
-            Assert.AreEqual(expected.Kunde.Id, actual.Kunde.Id);
-            Assert.AreEqual(expected.Kunde.Nachname, actual.Kunde.Nachname);
-            Assert.AreEqual(expected.Kunde.Vorname, actual.Kunde.Vorname);
+            assertReservationDtosAreEqual(expected, actual);
         }
 
         #endregion
@@ -226,10 +188,7 @@ namespace AutoReservation.Service.Wcf.Testing
             Target.UpdateAuto(expected);
 
             var actual = Target.GetAutoById(expected.Id);
-            Assert.AreEqual(expected.Basistarif, actual.Basistarif);
-            Assert.AreEqual(expected.Id, actual.Id);
-            Assert.AreEqual(expected.Marke, actual.Marke);
-            Assert.AreEqual(expected.Tagestarif, actual.Tagestarif);
+            assertAutoDtosAreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -240,10 +199,7 @@ namespace AutoReservation.Service.Wcf.Testing
             Target.UpdateKunde(expected);
 
             var actual = Target.GetKundeById(expected.Id);
-            Assert.AreEqual(expected.Geburtsdatum, actual.Geburtsdatum);
-            Assert.AreEqual(expected.Id, actual.Id);
-            Assert.AreEqual(expected.Nachname, actual.Nachname);
-            Assert.AreEqual(expected.Vorname, actual.Vorname);
+            assertKundeDtosAreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -254,19 +210,7 @@ namespace AutoReservation.Service.Wcf.Testing
             Target.UpdateReservation(expected);
 
             var actual = Target.GetReservationByNr(expected.ReservationsNr);
-            Assert.AreEqual(expected.Bis, actual.Bis);
-            Assert.AreEqual(expected.Von, actual.Von);
-
-            Assert.AreEqual(expected.Auto.AutoKlasse, actual.Auto.AutoKlasse);
-            Assert.AreEqual(expected.Auto.Basistarif, actual.Auto.Basistarif);
-            Assert.AreEqual(expected.Auto.Id, actual.Auto.Id);
-            Assert.AreEqual(expected.Auto.Marke, actual.Auto.Marke);
-            Assert.AreEqual(expected.Auto.Tagestarif, actual.Auto.Tagestarif);
-
-            Assert.AreEqual(expected.Kunde.Geburtsdatum, actual.Kunde.Geburtsdatum);
-            Assert.AreEqual(expected.Kunde.Id, actual.Kunde.Id);
-            Assert.AreEqual(expected.Kunde.Nachname, actual.Kunde.Nachname);
-            Assert.AreEqual(expected.Kunde.Vorname, actual.Kunde.Vorname);
+            assertReservationDtosAreEqual(expected, actual);
         }
 
         #endregion
@@ -316,5 +260,30 @@ namespace AutoReservation.Service.Wcf.Testing
         }
 
         #endregion
+
+        private static void assertAutoDtosAreEqual(AutoDto expected, AutoDto actual)
+        {
+            Assert.AreEqual(expected.AutoKlasse, actual.AutoKlasse);
+            Assert.AreEqual(expected.Basistarif, actual.Basistarif);
+            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.AreEqual(expected.Marke, actual.Marke);
+            Assert.AreEqual(expected.Tagestarif, actual.Tagestarif);
+        }
+
+        private static void assertKundeDtosAreEqual(KundeDto expected, KundeDto actual)
+        {
+            Assert.AreEqual(expected.Geburtsdatum, actual.Geburtsdatum);
+            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.AreEqual(expected.Nachname, actual.Nachname);
+            Assert.AreEqual(expected.Vorname, actual.Vorname);
+        }
+
+        private static void assertReservationDtosAreEqual(ReservationDto expected, ReservationDto actual)
+        {
+            assertAutoDtosAreEqual(expected.Auto, actual.Auto);
+            Assert.AreEqual(expected.Bis, actual.Bis);
+            assertKundeDtosAreEqual(expected.Kunde, actual.Kunde);
+            Assert.AreEqual(expected.Von, actual.Von);
+        }
     }
 }

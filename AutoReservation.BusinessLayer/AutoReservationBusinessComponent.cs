@@ -115,7 +115,7 @@ namespace AutoReservation.BusinessLayer
 
         public void DeleteReservation(Reservation reservation)
         {
-            updateEntity(reservation, EntityState.Deleted);
+            updateReservation(reservation, EntityState.Deleted);
         }
 
         private static T updateEntity<T>(T value, EntityState state)

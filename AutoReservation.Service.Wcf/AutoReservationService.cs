@@ -112,16 +112,19 @@ namespace AutoReservation.Service.Wcf
 
         public void DeleteAuto(AutoDto autoDto)
         {
+            WriteActualMethod();
             component.DeleteAuto(autoDto.ConvertToEntity());
         }
 
         public void DeleteKunde(KundeDto kundeDto)
         {
+            WriteActualMethod();
             component.DeleteKunde(kundeDto.ConvertToEntity());
         }
 
         public void DeleteReservation(ReservationDto reservationDto)
         {
+            WriteActualMethod();
             component.DeleteReservation(reservationDto.ConvertToEntity());
         }
     }

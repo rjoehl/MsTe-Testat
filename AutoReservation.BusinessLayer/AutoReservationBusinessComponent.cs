@@ -10,67 +10,39 @@ namespace AutoReservation.BusinessLayer
 {
     public class AutoReservationBusinessComponent
     {
-        public List<Auto> Autos
-        {
-            get
-            {
-                using (var context = new AutoReservationContext())
-                {
-                    return context.Autos.ToList();
-                }
-            }
-        }
+        public List<Auto> Autos { get { return usingContext(context => context.Autos.ToList()); } }
 
-        public List<Kunde> Kunden
-        {
-            get
-            {
-                using (var context = new AutoReservationContext())
-                {
-                    return context.Kunden.ToList();
-                }
-            }
-        }
+        public List<Kunde> Kunden { get { return usingContext(context => context.Kunden.ToList()); } }
 
         public List<Reservation> Reservationen
         {
             get
             {
-                using (var context = new AutoReservationContext())
-                {
-                    return context.Reservationen
+                return usingContext(context =>
+                    context.Reservationen
                         .Include(reservation => reservation.Kunde)
                         .Include(reservation => reservation.Auto)
-                        .ToList();
-                }
+                        .ToList());
             }
         }
 
         public Auto GetAutoById(int id)
         {
-            using (var context = new AutoReservationContext())
-            {
-                return context.Autos.FirstOrDefault(auto => auto.Id == id);
-            }
+            return usingContext(context => context.Autos.FirstOrDefault(auto => auto.Id == id));
         }
 
         public Kunde GetKundeById(int id)
         {
-            using (var context = new AutoReservationContext())
-            {
-                return context.Kunden.FirstOrDefault(kunde => kunde.Id == id);
-            }
+            return usingContext(context => context.Kunden.FirstOrDefault(kunde => kunde.Id == id));
         }
 
         public Reservation GetReservationByNr(int reservationsNr)
         {
-            using (var context = new AutoReservationContext())
-            {
-                return context.Reservationen
+            return usingContext(context =>
+                context.Reservationen
                     .Include(reservation => reservation.Kunde)
                     .Include(reservation => reservation.Auto)
-                    .FirstOrDefault(reservation => reservation.ReservationsNr == reservationsNr);
-            }
+                    .FirstOrDefault(reservation => reservation.ReservationsNr == reservationsNr));
         }
 
         public Auto InsertAuto(Auto auto)
@@ -130,7 +102,7 @@ namespace AutoReservation.BusinessLayer
 
         private static Reservation updateReservation(Reservation value, EntityState state)
         {
-            using (var context = new AutoReservationContext())
+            return usingContext(context =>
             {
                 var entry = context.Entry(value);
                 entry.State = state;
@@ -141,21 +113,29 @@ namespace AutoReservation.BusinessLayer
                     entry.Reference(r => r.Auto).Load();
                     entry.Reference(r => r.Kunde).Load();
                 }
-            }
 
-            return value;
+                return value;
+            });
         }
 
         private static T updateEntityWithoutReferences<T>(T value, EntityState state)
             where T : class
         {
-            using (var context = new AutoReservationContext())
+            return usingContext(context =>
             {
                 context.Entry(value).State = state;
                 context.SaveChanges();
-            }
 
-            return value;
+                return value;
+            });
+        }
+
+        private static T usingContext<T>(Func<AutoReservationContext, T> func)
+        {
+            using (var context = new AutoReservationContext())
+            {
+                return func(context);
+            }
         }
 
         private static LocalOptimisticConcurrencyException<T> CreateLocalOptimisticConcurrencyException<T>(AutoReservationContext context, T entity)

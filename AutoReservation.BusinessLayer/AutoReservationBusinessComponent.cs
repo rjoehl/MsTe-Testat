@@ -128,18 +128,6 @@ namespace AutoReservation.BusinessLayer
             return updateEntityWithoutReferences(value, state);
         }
 
-        private static T updateEntityWithoutReferences<T>(T value, EntityState state)
-            where T : class
-        {
-            using (var context = new AutoReservationContext())
-            {
-                context.Entry(value).State = state;
-                context.SaveChanges();
-            }
-
-            return value;
-        }
-
         private static Reservation updateReservation(Reservation value, EntityState state)
         {
             using (var context = new AutoReservationContext())
@@ -153,6 +141,18 @@ namespace AutoReservation.BusinessLayer
                     entry.Reference(r => r.Auto).Load();
                     entry.Reference(r => r.Kunde).Load();
                 }
+            }
+
+            return value;
+        }
+
+        private static T updateEntityWithoutReferences<T>(T value, EntityState state)
+            where T : class
+        {
+            using (var context = new AutoReservationContext())
+            {
+                context.Entry(value).State = state;
+                context.SaveChanges();
             }
 
             return value;

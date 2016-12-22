@@ -274,21 +274,45 @@ namespace AutoReservation.Service.Wcf.Testing
         #region Update with optimistic concurrency violation
 
         [TestMethod]
+        [ExpectedException(typeof(FaultException<OptimisticConcurrencyFaultContract>))]
         public void UpdateAutoWithOptimisticConcurrencyTest()
         {
-            Assert.Inconclusive("Test not implemented.");
+            var firstInstance = Target.Autos.First();
+            firstInstance.Tagestarif -= 20;
+
+            var secondInstance = Target.Autos.First();
+            secondInstance.Tagestarif -= 20;
+            Target.UpdateAuto(secondInstance);
+
+            Target.UpdateAuto(firstInstance);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(FaultException<OptimisticConcurrencyFaultContract>))]
         public void UpdateKundeWithOptimisticConcurrencyTest()
         {
-            Assert.Inconclusive("Test not implemented.");
+            var firstInstance = Target.Kunden.First();
+            firstInstance.Vorname += " J.";
+
+            var secondInstance = Target.Kunden.First();
+            secondInstance.Vorname += " K.";
+            Target.UpdateKunde(secondInstance);
+
+            Target.UpdateKunde(firstInstance);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(FaultException<OptimisticConcurrencyFaultContract>))]
         public void UpdateReservationWithOptimisticConcurrencyTest()
         {
-            Assert.Inconclusive("Test not implemented.");
+            var firstInstance = Target.Reservationen.First();
+            firstInstance.Von = firstInstance.Von.Subtract(new TimeSpan(1, 0, 0));
+
+            var secondInstance = Target.Reservationen.First();
+            secondInstance.Von = secondInstance.Von.Subtract(new TimeSpan(1, 0, 0));
+            Target.UpdateReservation(secondInstance);
+
+            Target.UpdateReservation(firstInstance);
         }
 
         #endregion

@@ -80,19 +80,58 @@ namespace AutoReservation.Service.Wcf
         public AutoDto UpdateAuto(AutoDto autoDto)
         {
             WriteActualMethod();
-            return component.UpdateAuto(autoDto.ConvertToEntity()).ConvertToDto();
+
+            try
+            {
+                return component.UpdateAuto(autoDto.ConvertToEntity()).ConvertToDto();
+            }
+            catch (LocalOptimisticConcurrencyException<Auto> e)
+            {
+                var fault = new OptimisticConcurrencyFaultContract()
+                {
+                    Operation = "UpdateAuto",
+                    Message = e.Message
+                };
+                throw new FaultException<OptimisticConcurrencyFaultContract>(fault);
+            }
         }
 
         public KundeDto UpdateKunde(KundeDto kundeDto)
         {
             WriteActualMethod();
-            return component.UpdateKunde(kundeDto.ConvertToEntity()).ConvertToDto();
+
+            try
+            {
+                return component.UpdateKunde(kundeDto.ConvertToEntity()).ConvertToDto();
+            }
+            catch (LocalOptimisticConcurrencyException<Kunde> e)
+            {
+                var fault = new OptimisticConcurrencyFaultContract()
+                {
+                    Operation = "UpdateKunde",
+                    Message = e.Message
+                };
+                throw new FaultException<OptimisticConcurrencyFaultContract>(fault);
+            }
         }
 
         public ReservationDto UpdateReservation(ReservationDto reservationDto)
         {
             WriteActualMethod();
-            return component.UpdateReservation(reservationDto.ConvertToEntity()).ConvertToDto();
+
+            try
+            {
+                return component.UpdateReservation(reservationDto.ConvertToEntity()).ConvertToDto();
+            }
+            catch (LocalOptimisticConcurrencyException<Reservation> e)
+            {
+                var fault = new OptimisticConcurrencyFaultContract()
+                {
+                    Operation = "UpdateReservation",
+                    Message = e.Message
+                };
+                throw new FaultException<OptimisticConcurrencyFaultContract>(fault);
+            }
         }
 
         public void DeleteAuto(AutoDto autoDto)

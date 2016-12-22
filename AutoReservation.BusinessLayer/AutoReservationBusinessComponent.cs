@@ -109,7 +109,15 @@ namespace AutoReservation.BusinessLayer
             {
                 var entry = context.Entry(value);
                 entry.State = state;
-                context.SaveChanges();
+
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw CreateLocalOptimisticConcurrencyException(context, value);
+                }
 
                 if (entry.State != EntityState.Detached)
                 {
@@ -127,7 +135,15 @@ namespace AutoReservation.BusinessLayer
             return usingContext(context =>
             {
                 context.Entry(value).State = state;
-                context.SaveChanges();
+
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw CreateLocalOptimisticConcurrencyException(context, value);
+                }
 
                 return value;
             });

@@ -75,50 +75,50 @@ namespace AutoReservation.BusinessLayer
 
         public Auto InsertAuto(Auto auto)
         {
-            return updateEntityAndState(auto, EntityState.Added);
+            return updateEntity(auto, EntityState.Added);
         }
 
         public Kunde InsertKunde(Kunde kunde)
         {
-            return updateEntityAndState(kunde, EntityState.Added);
+            return updateEntity(kunde, EntityState.Added);
         }
 
         public Reservation InsertReservation(Reservation reservation)
         {
-            return updateReservationAndState(reservation, EntityState.Added);
+            return updateReservation(reservation, EntityState.Added);
         }
 
         public Auto UpdateAuto(Auto auto)
         {
-            return updateEntityAndState(auto, EntityState.Modified);
+            return updateEntity(auto, EntityState.Modified);
         }
 
         public Kunde UpdateKunde(Kunde kunde)
         {
-            return updateEntityAndState(kunde, EntityState.Modified);
+            return updateEntity(kunde, EntityState.Modified);
         }
 
         public Reservation UpdateReservation(Reservation reservation)
         {
-            return updateReservationAndState(reservation, EntityState.Modified);
+            return updateReservation(reservation, EntityState.Modified);
         }
 
         public void DeleteAuto(Auto auto)
         {
-            updateEntityAndState(auto, EntityState.Deleted);
+            updateEntity(auto, EntityState.Deleted);
         }
 
         public void DeleteKunde(Kunde kunde)
         {
-            updateEntityAndState(kunde, EntityState.Deleted);
+            updateEntity(kunde, EntityState.Deleted);
         }
 
         public void DeleteReservation(Reservation reservation)
         {
-            updateEntityAndState(reservation, EntityState.Deleted);
+            updateEntity(reservation, EntityState.Deleted);
         }
 
-        private static T updateEntityAndState<T>(T value, EntityState state)
+        private static T updateEntity<T>(T value, EntityState state)
             where T : class
         {
             using (var context = new AutoReservationContext())
@@ -130,7 +130,7 @@ namespace AutoReservation.BusinessLayer
             return value;
         }
 
-        private static Reservation updateReservationAndState(Reservation value, EntityState state)
+        private static Reservation updateReservation(Reservation value, EntityState state)
         {
             using (var context = new AutoReservationContext())
             {

@@ -103,21 +103,13 @@ namespace AutoReservation.BusinessLayer
                     .Include(reservation => reservation.Auto);
         }
 
-        private static Reservation updateReservation(Reservation value, EntityState state)
+        private static Reservation updateReservation(Reservation reservation, EntityState state)
         {
             return usingContext(context =>
             {
-                var entry = context.Entry(value);
+                var entry = context.Entry(reservation);
                 entry.State = state;
-
-                try
-                {
-                    context.SaveChanges();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    throw CreateLocalOptimisticConcurrencyException(context, value);
-                }
+                saveChanges(context, reservation);
 
                 if (entry.State != EntityState.Detached)
                 {
@@ -125,28 +117,33 @@ namespace AutoReservation.BusinessLayer
                     entry.Reference(r => r.Kunde).Load();
                 }
 
-                return value;
+                return reservation;
             });
         }
 
-        private static T updateEntityWithoutReferences<T>(T value, EntityState state)
+        private static T updateEntityWithoutReferences<T>(T entity, EntityState state)
             where T : class
         {
             return usingContext(context =>
             {
-                context.Entry(value).State = state;
+                context.Entry(entity).State = state;
+                saveChanges(context, entity);
 
-                try
-                {
-                    context.SaveChanges();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    throw CreateLocalOptimisticConcurrencyException(context, value);
-                }
-
-                return value;
+                return entity;
             });
+        }
+
+        private static void saveChanges<T>(AutoReservationContext context, T entity)
+            where T : class
+        {
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw CreateLocalOptimisticConcurrencyException(context, entity);
+            }
         }
 
         private static LocalOptimisticConcurrencyException<T> CreateLocalOptimisticConcurrencyException<T>(AutoReservationContext context, T entity)

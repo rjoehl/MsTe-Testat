@@ -120,15 +120,15 @@ namespace AutoReservation.BusinessLayer
 
         private static Auto updateAuto(Auto value, EntityState state)
         {
-            return updateEntity(value, state);
+            return updateEntityWithoutReferences(value, state);
         }
 
         private static Kunde updateKunde(Kunde value, EntityState state)
         {
-            return updateEntity(value, state);
+            return updateEntityWithoutReferences(value, state);
         }
 
-        private static T updateEntity<T>(T value, EntityState state)
+        private static T updateEntityWithoutReferences<T>(T value, EntityState state)
             where T : class
         {
             using (var context = new AutoReservationContext())

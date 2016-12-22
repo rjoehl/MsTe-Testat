@@ -48,18 +48,11 @@ namespace AutoReservation.BusinessLayer
             {
                 using (var context = new AutoReservationContext())
                 {
-                    return context.Reservationen.ToList();
+                    return context.Reservationen
+                        .Include(reservation => reservation.Kunde)
+                        .Include(reservation => reservation.Auto)
+                        .ToList();
                 }
-            }
-        }
-
-        public List<Auto> GetAllAutos()
-        {
-            using (var context = new AutoReservationContext())
-            {
-                return context.Autos
-                    .Include(auto => auto.Reservationen)
-                    .ToList();
             }
         }
 
@@ -80,16 +73,6 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-        public List<Kunde> GetAllKunden()
-        {
-            using (var context = new AutoReservationContext())
-            {
-                return context.Kunden
-                    .Include(kunde => kunde.Reservationen)
-                    .ToList();
-            }
-        }
-
         public Kunde GetKundeById(int id)
         {
             using (var context = new AutoReservationContext())
@@ -107,18 +90,6 @@ namespace AutoReservation.BusinessLayer
                 }
             }
         }
-
-        public List<Reservation> GetAllReservations()
-        {
-            using (var context = new AutoReservationContext())
-            {
-                return context.Reservationen
-                    .Include(reservation => reservation.Kunde)
-                    .Include(reservation => reservation.Auto)
-                    .ToList();
-            }
-        }
-
 
         public Reservation GetReservationByNr(int reservationsNr)
         {

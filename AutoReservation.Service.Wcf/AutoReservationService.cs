@@ -24,7 +24,7 @@ namespace AutoReservation.Service.Wcf
             get
             {
                 WriteActualMethod();
-                return component.GetAllAutos().ConvertToDtos();
+                return component.Autos.ConvertToDtos();
             }
         }
 
@@ -33,7 +33,7 @@ namespace AutoReservation.Service.Wcf
             get
             {
                 WriteActualMethod();
-                return component.GetAllKunden().ConvertToDtos();
+                return component.Kunden.ConvertToDtos();
             }
         }
 
@@ -42,7 +42,7 @@ namespace AutoReservation.Service.Wcf
             get
             {
                 WriteActualMethod();
-                return component.GetAllReservations().ConvertToDtos();
+                return component.Reservationen.ConvertToDtos();
             }
         }
 

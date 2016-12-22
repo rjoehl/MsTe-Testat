@@ -24,8 +24,7 @@ namespace AutoReservation.Service.Wcf
             get
             {
                 WriteActualMethod();
-                List<Auto> autoList = component.GetAllAutos();
-                return autoList.ConvertToDtos();
+                return component.GetAllAutos().ConvertToDtos();
             }
         }
 
@@ -34,8 +33,7 @@ namespace AutoReservation.Service.Wcf
             get
             {
                 WriteActualMethod();
-                List<Kunde> kundeList = component.GetAllKunden();
-                return kundeList.ConvertToDtos();
+                return component.GetAllKunden().ConvertToDtos();
             }
         }
 
@@ -44,8 +42,7 @@ namespace AutoReservation.Service.Wcf
             get
             {
                 WriteActualMethod();
-                List<Reservation> reservationList = component.GetAllReservations();
-                return reservationList.ConvertToDtos();
+                return component.GetAllReservations().ConvertToDtos();
             }
         }
 
@@ -82,32 +79,25 @@ namespace AutoReservation.Service.Wcf
         public ReservationDto InsertReservation(ReservationDto reservationDto)
         {
             WriteActualMethod();
-            Reservation reservation = reservationDto.ConvertToEntity();
-            reservation = component.InsertReservation(reservation);
-            return reservation.ConvertToDto();
+            return component.InsertReservation(reservationDto.ConvertToEntity()).ConvertToDto();
         }
 
         public AutoDto UpdateAuto(AutoDto autoDto)
         {
             WriteActualMethod();
-            Auto auto = autoDto.ConvertToEntity();
-            component.UpdateAuto(auto);
-            return auto.ConvertToDto();
+            return component.UpdateAuto(autoDto.ConvertToEntity()).ConvertToDto();
         }
 
         public KundeDto UpdateKunde(KundeDto kundeDto)
         {
             WriteActualMethod();
-            Kunde kunde = kundeDto.ConvertToEntity();
-            component.UpdateKunde(kunde);
-            return kunde.ConvertToDto();
+            return component.UpdateKunde(kundeDto.ConvertToEntity()).ConvertToDto();
         }
 
         public ReservationDto UpdateReservation(ReservationDto reservationDto)
         {
             WriteActualMethod();
-            Reservation reservation = reservationDto.ConvertToEntity();
-            return component.UpdateReservation(reservation).ConvertToDto();
+            return component.UpdateReservation(reservationDto.ConvertToEntity()).ConvertToDto();
         }
 
         public void DeleteAuto(AutoDto autoDto)

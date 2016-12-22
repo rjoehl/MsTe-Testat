@@ -88,6 +88,14 @@ namespace AutoReservation.BusinessLayer
             return updateEntityWithoutReferences(value, state);
         }
 
+        private static T usingContext<T>(Func<AutoReservationContext, T> func)
+        {
+            using (var context = new AutoReservationContext())
+            {
+                return func(context);
+            }
+        }
+
         private static IQueryable<Reservation> includeReservationReferences(IQueryable<Reservation> reservations)
         {
             return reservations
@@ -123,14 +131,6 @@ namespace AutoReservation.BusinessLayer
 
                 return value;
             });
-        }
-
-        private static T usingContext<T>(Func<AutoReservationContext, T> func)
-        {
-            using (var context = new AutoReservationContext())
-            {
-                return func(context);
-            }
         }
 
         private static LocalOptimisticConcurrencyException<T> CreateLocalOptimisticConcurrencyException<T>(AutoReservationContext context, T entity)

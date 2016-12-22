@@ -95,21 +95,10 @@ namespace AutoReservation.BusinessLayer
         {
             using (var context = new AutoReservationContext())
             {
-                var query = from reservation in context.Reservationen
-                            where reservation.ReservationsNr == reservationsNr
-                            select reservation;
-                return query.First();
-            }
-        }
-        
-        public Reservation LoadReservation(int reservationsNr)
-        {
-            using (var context = new AutoReservationContext())
-            {
                 return context.Reservationen
                     .Include(reservation => reservation.Kunde)
                     .Include(reservation => reservation.Auto)
-                    .SingleOrDefault(reservation => reservation.ReservationsNr == reservationsNr);
+                    .FirstOrDefault(reservation => reservation.ReservationsNr == reservationsNr);
             }
         }
 

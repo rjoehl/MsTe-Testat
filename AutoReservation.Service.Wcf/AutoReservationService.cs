@@ -49,21 +49,6 @@ namespace AutoReservation.Service.Wcf
             }
         }
 
-        public void DeleteAuto(AutoDto autoDto)
-         {
-            component.DeleteAuto(autoDto.ConvertToEntity());
-        }
-
-        public void DeleteKunde(KundeDto kundeDto)
-        {
-            component.DeleteKunde(kundeDto.ConvertToEntity());
-        }
-
-        public void DeleteReservation(ReservationDto reservationDto)
-        {
-            component.DeleteReservation(reservationDto.ConvertToEntity());
-        }
-
         public AutoDto GetAutoById(int id)
         {
             WriteActualMethod();
@@ -123,6 +108,21 @@ namespace AutoReservation.Service.Wcf
             WriteActualMethod();
             Reservation reservation = reservationDto.ConvertToEntity();
             return component.UpdateReservation(reservation).ConvertToDto();
+        }
+
+        public void DeleteAuto(AutoDto autoDto)
+        {
+            component.DeleteAuto(autoDto.ConvertToEntity());
+        }
+
+        public void DeleteKunde(KundeDto kundeDto)
+        {
+            component.DeleteKunde(kundeDto.ConvertToEntity());
+        }
+
+        public void DeleteReservation(ReservationDto reservationDto)
+        {
+            component.DeleteReservation(reservationDto.ConvertToEntity());
         }
     }
 }

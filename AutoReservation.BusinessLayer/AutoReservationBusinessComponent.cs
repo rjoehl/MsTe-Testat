@@ -75,12 +75,12 @@ namespace AutoReservation.BusinessLayer
 
         public Auto InsertAuto(Auto auto)
         {
-            return updateEntity(auto, EntityState.Added);
+            return updateAuto(auto, EntityState.Added);
         }
 
         public Kunde InsertKunde(Kunde kunde)
         {
-            return updateEntity(kunde, EntityState.Added);
+            return updateKunde(kunde, EntityState.Added);
         }
 
         public Reservation InsertReservation(Reservation reservation)
@@ -90,12 +90,12 @@ namespace AutoReservation.BusinessLayer
 
         public Auto UpdateAuto(Auto auto)
         {
-            return updateEntity(auto, EntityState.Modified);
+            return updateAuto(auto, EntityState.Modified);
         }
 
         public Kunde UpdateKunde(Kunde kunde)
         {
-            return updateEntity(kunde, EntityState.Modified);
+            return updateKunde(kunde, EntityState.Modified);
         }
 
         public Reservation UpdateReservation(Reservation reservation)
@@ -105,17 +105,27 @@ namespace AutoReservation.BusinessLayer
 
         public void DeleteAuto(Auto auto)
         {
-            updateEntity(auto, EntityState.Deleted);
+            updateAuto(auto, EntityState.Deleted);
         }
 
         public void DeleteKunde(Kunde kunde)
         {
-            updateEntity(kunde, EntityState.Deleted);
+            updateKunde(kunde, EntityState.Deleted);
         }
 
         public void DeleteReservation(Reservation reservation)
         {
             updateReservation(reservation, EntityState.Deleted);
+        }
+
+        private static Auto updateAuto(Auto value, EntityState state)
+        {
+            return updateEntity(value, state);
+        }
+
+        private static Kunde updateKunde(Kunde value, EntityState state)
+        {
+            return updateEntity(value, state);
         }
 
         private static T updateEntity<T>(T value, EntityState state)

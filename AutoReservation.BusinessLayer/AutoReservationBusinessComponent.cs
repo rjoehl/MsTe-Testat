@@ -118,17 +118,7 @@ namespace AutoReservation.BusinessLayer
             updateEntityAndState(reservation, EntityState.Deleted);
         }
 
-        private static LocalOptimisticConcurrencyException<T> CreateLocalOptimisticConcurrencyException<T>(AutoReservationContext context, T entity)
-            where T : class
-        {
-            var dbEntity = (T)context.Entry(entity)
-                .GetDatabaseValues()
-                .ToObject();
-
-            return new LocalOptimisticConcurrencyException<T>($"Update {typeof(Auto).Name}: Concurrency-Fehler", dbEntity);
-        }
-
-        private T updateEntityAndState<T>(T value, EntityState state)
+        private static T updateEntityAndState<T>(T value, EntityState state)
             where T : class
         {
             using (var context = new AutoReservationContext())
@@ -140,7 +130,7 @@ namespace AutoReservation.BusinessLayer
             return value;
         }
 
-        private Reservation updateReservationAndState(Reservation value, EntityState state)
+        private static Reservation updateReservationAndState(Reservation value, EntityState state)
         {
             using (var context = new AutoReservationContext())
             {
@@ -153,6 +143,16 @@ namespace AutoReservation.BusinessLayer
             }
 
             return value;
+        }
+
+        private static LocalOptimisticConcurrencyException<T> CreateLocalOptimisticConcurrencyException<T>(AutoReservationContext context, T entity)
+            where T : class
+        {
+            var dbEntity = (T)context.Entry(entity)
+                .GetDatabaseValues()
+                .ToObject();
+
+            return new LocalOptimisticConcurrencyException<T>($"Update {typeof(Auto).Name}: Concurrency-Fehler", dbEntity);
         }
     }
 }

@@ -81,57 +81,24 @@ namespace AutoReservation.Service.Wcf
         {
             WriteActualMethod();
 
-            try
-            {
-                return component.UpdateAuto(autoDto.ConvertToEntity()).ConvertToDto();
-            }
-            catch (LocalOptimisticConcurrencyException<Auto> e)
-            {
-                var fault = new OptimisticConcurrencyFaultContract()
-                {
-                    Operation = "UpdateAuto",
-                    Message = e.Message
-                };
-                throw new FaultException<OptimisticConcurrencyFaultContract>(fault);
-            }
+            return handlingOptimisticConcurrencyException<Auto, AutoDto>("UpdateAuto",
+                () => component.UpdateAuto(autoDto.ConvertToEntity()).ConvertToDto());
         }
 
         public KundeDto UpdateKunde(KundeDto kundeDto)
         {
             WriteActualMethod();
 
-            try
-            {
-                return component.UpdateKunde(kundeDto.ConvertToEntity()).ConvertToDto();
-            }
-            catch (LocalOptimisticConcurrencyException<Kunde> e)
-            {
-                var fault = new OptimisticConcurrencyFaultContract()
-                {
-                    Operation = "UpdateKunde",
-                    Message = e.Message
-                };
-                throw new FaultException<OptimisticConcurrencyFaultContract>(fault);
-            }
+            return handlingOptimisticConcurrencyException<Kunde, KundeDto>("UpdateKunde",
+                () => component.UpdateKunde(kundeDto.ConvertToEntity()).ConvertToDto());
         }
 
         public ReservationDto UpdateReservation(ReservationDto reservationDto)
         {
             WriteActualMethod();
 
-            try
-            {
-                return component.UpdateReservation(reservationDto.ConvertToEntity()).ConvertToDto();
-            }
-            catch (LocalOptimisticConcurrencyException<Reservation> e)
-            {
-                var fault = new OptimisticConcurrencyFaultContract()
-                {
-                    Operation = "UpdateReservation",
-                    Message = e.Message
-                };
-                throw new FaultException<OptimisticConcurrencyFaultContract>(fault);
-            }
+            return handlingOptimisticConcurrencyException<Reservation, ReservationDto>("UpdateReservation",
+                () => component.UpdateReservation(reservationDto.ConvertToEntity()).ConvertToDto());
         }
 
         public void DeleteAuto(AutoDto autoDto)
@@ -150,6 +117,23 @@ namespace AutoReservation.Service.Wcf
         {
             WriteActualMethod();
             component.DeleteReservation(reservationDto.ConvertToEntity());
+        }
+
+        private static TReturn handlingOptimisticConcurrencyException<TEntity, TReturn>(string operation, Func<TReturn> func)
+        {
+            try
+            {
+                return func();
+            }
+            catch (LocalOptimisticConcurrencyException<TEntity> e)
+            {
+                var fault = new OptimisticConcurrencyFaultContract()
+                {
+                    Operation = operation,
+                    Message = e.Message
+                };
+                throw new FaultException<OptimisticConcurrencyFaultContract>(fault);
+            }
         }
 
         private static void WriteActualMethod()
